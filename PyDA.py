@@ -2,6 +2,8 @@ import wx
 #from espeak import espeak
 import wikipedia
 import wolframalpha
+import pyttsx3
+engine = pyttsx3.init()
 # from espeak import espeak
 # import wolframalpha
 
@@ -26,11 +28,13 @@ class MyFrame(wx.Frame):
         my_sizer.Add(self.txt, 0, wx.ALL, 5)
         panel.SetSizer(my_sizer)
         self.Show()
-
+        engine.say("Welcome to Virtual Assistant")
+        engine.runAndWait()
     def OnEnter(self, event):
 
         var = self.txt.GetValue()
         var = var.lower()
+
         try:
         	res = client.query(var)
         	answer = next(res.results).text
@@ -43,7 +47,9 @@ class MyFrame(wx.Frame):
        			print (wikipedia.summary(var))
        		except:
        			print ("I don't know")
-
+        
+        engine.say("The Searched Results is " + answer)
+        engine.runAndWait()
 
 if __name__ == "__main__":
     app = wx.App(True)
